@@ -3,8 +3,10 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
-// Support configurable backend base URL, defaulting to relative path for Vite proxy
-const baseURL = import.meta.env.VITE_API_BASE_URL || '';
+// Support configurable backend base URL with live Render backend fallback in production
+const baseURL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD ? 'https://vulnscan-lite-gxs6.onrender.com' : '');
 
 export const api: AxiosInstance = axios.create({
   baseURL,
