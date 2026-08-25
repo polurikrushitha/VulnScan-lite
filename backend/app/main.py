@@ -98,6 +98,19 @@ app.include_router(reports.router)
 # Health Checks & Docs Redirect
 # ---------------------------------------------------------------------------
 
+@app.get("/", tags=["Health"])
+@limiter.exempt
+async def root() -> dict:
+    """Root endpoint welcoming users and pointing to API documentation."""
+    return {
+        "status": "ok",
+        "service": "VulnScan Lite API",
+        "version": "1.0.0",
+        "docs": "/api/docs",
+        "health": "/health",
+    }
+
+
 @app.get("/docs", include_in_schema=False)
 async def docs_redirect() -> RedirectResponse:
     """Redirect /docs to /api/docs."""
